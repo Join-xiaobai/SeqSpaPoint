@@ -1,0 +1,7 @@
+Feature,Feature Importance (×10⁻³)
+Drug Emb Dim1 (X-weighted),0.7565300498583477
+Drug Emb Dim2 (X-weighted),6.132919926366637
+Drug Complexity (X),7.975784558218627
+Protein Length (Y),21.546126570644837
+Target Emb Dim1 (Y-weighted),37.63784416847995
+Size Match Ratio (Z),52.73633222965139

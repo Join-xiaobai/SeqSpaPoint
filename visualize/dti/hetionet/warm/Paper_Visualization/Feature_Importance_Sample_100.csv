@@ -1,0 +1,7 @@
+Feature,Feature Importance (×10⁻³)
+Drug Emb Dim1 (X-weighted),3.3345988497115653
+Sequence Length (Y),13.217205402247144
+Molecular Weight (X),14.663046174509333
+Drug Emb Dim2 (X-weighted),15.978061450842961
+Target Emb Dim1 (Y-weighted),27.511526028169893
+Binding Score (Z),55.32313028849253

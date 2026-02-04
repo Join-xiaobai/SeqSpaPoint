@@ -1,0 +1,7 @@
+Feature,Feature Importance (×10⁻³)
+Drug Emb Dim2 (X-weighted),1.70036837716172
+Drug Emb Dim1 (X-weighted),2.334993787035401
+Activity Score (X),7.791788802605034
+MOA Similarity (Z),8.91452915845666
+Expression Level (Y),47.22691029412103
+Target Emb Dim1 (Y-weighted),77.37251076990198
