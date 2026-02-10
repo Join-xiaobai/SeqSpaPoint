@@ -175,7 +175,7 @@ def generate_target_embeddings_batch(prot_df, tokenizer, model, device, batch_si
 
 # ===================== 数据读取函数（无修改）=====================
 def read_drug_df(input_dir: str) -> pd.DataFrame:
-    """读取 DTA 模式药物文件并转换为 DataFrame"""
+    """读取 DTA 模式药物文件并转换为 DataFrame（新增原始索引）"""
     file_path = os.path.join(input_dir, "ligands_can.txt")
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"药物文件不存在：{file_path}")
@@ -194,14 +194,21 @@ def read_drug_df(input_dir: str) -> pd.DataFrame:
     except json.JSONDecodeError as e:
         raise Exception(f"JSON 解析失败：{e}")
     
-    df = pd.DataFrame(list(drug_dict.items()), columns=["drug_id", "smiles"])
+    # 核心修改1：保留原始索引（按文件中的顺序）
+    df = pd.DataFrame(
+        list(drug_dict.items()), 
+        columns=["drug_id", "smiles"],
+        index=range(len(drug_dict))  # 原始索引（0~N）
+    )
     # 仅删除空值，保留原始索引（保证与亲和力矩阵对齐）
     df = df[["drug_id", "smiles"]].dropna(subset=["drug_id", "smiles"])
     # 序列有效性过滤
     df["is_valid"] = df["smiles"].apply(is_valid_smiles)
-    df = df[df["is_valid"]].drop(columns=["is_valid"])
-    print(f"✅ 解析 ligands_can.txt 为 JSON → 有效药物数: {len(df)}")
-    return df
+    # 核心修改2：记录有效药物的原始索引
+    valid_df = df[df["is_valid"]].drop(columns=["is_valid"]).copy()
+    valid_df["original_index"] = valid_df.index  # 新增列：原始文件中的索引
+    print(f"✅ 解析 ligands_can.txt 为 JSON → 原始药物数: {len(df)}，有效药物数: {len(valid_df)}")
+    return valid_df  # 返回带original_index的df
 
 def read_protein_df(input_dir: str) -> pd.DataFrame:
     """读取 DTA 模式蛋白文件并转换为 DataFrame"""
@@ -327,6 +334,14 @@ def read_raw_files(mode: str, input_dir: str, dataset_name: str) -> tuple:
         proteins = read_protein_df(input_dir)
         interact_path = os.path.join(input_dir, DTA_FILES["interaction"])
         _, affinity_matrix = read_interaction_file(interact_path, mode)
+        
+        # 核心修改：仅对MTC数据集做索引对齐，其他数据集跳过（保证兼容性）
+        if dataset_name.lower() == "mtc":
+            # 用有效药物的原始索引对齐Y矩阵
+            valid_original_indices = drugs["original_index"].tolist()
+            # 截取Y矩阵中有效药物对应的行
+            affinity_matrix = affinity_matrix[valid_original_indices, :]
+            print(f"🔍 MTC数据集专属：按有效药物索引裁剪Y矩阵 → 新形状：{affinity_matrix.shape}")
         
         # 严格校验矩阵形状与药物/蛋白数量匹配
         if affinity_matrix.shape != (len(drugs), len(proteins)):

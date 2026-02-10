@@ -1,3 +1,0 @@
-﻿target_gene,true_affinity_mean,true_affinity_std,true_affinity_min,true_affinity_max,pred_affinity_mean,pred_affinity_std,pred_affinity_min,pred_affinity_max,true_pIC50_mean,true_pIC50_std,pred_pIC50_mean,pred_pIC50_std,dti_probability_mean,dti_probability_std,dti_label_sum,corr_overall,p_overall,corr_high_affinity,p_high_affinity,high_affinity_count,dti_accuracy
-MET,6546.0883,4252.6481,0.19,10000.0,8.5495,0.7389,5.4716,9.0462,5.5855,1.0417,8.0699,0.0421,0.5021,0.0002,204,0.1855,0.007893,0.4497,0.092579,15,1.0
-RET,7892.7723,3817.6391,0.46,10000.0,8.0482,1.0712,5.5659,9.0393,5.3413,0.753,8.0985,0.0616,0.502,0.0003,272,0.0705,0.24654,0.0587,0.829138,16,1.0

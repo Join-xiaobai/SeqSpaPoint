@@ -1,23 +1,3 @@
-# 深度学习核心框架
-torch>=1.12.0
-torchvision>=0.13.0
-
-# 3D点云处理
-open3d>=0.15.0
-plyfile>=0.7.4
-
-# 数据科学与数值计算
-numpy>=1.24.3
-pandas>=2.0.3
-scipy>=1.10.1
-
-# 机器学习与模型评估
-scikit-learn>=1.2.2
-scikit-surprise>=1.1.3  # DTA任务CI指标计算
-
-# 自然语言处理（药物/靶点嵌入生成）
-transformers>=4.30.2
-
-# 工具类
-tqdm>=4.65.0
-json5>=0.9.6  # JSON数据读写兼容性
+version https://git-lfs.github.com/spec/v1
+oid sha256:a618a9ea7fb560788a9e140dbc0dea67da09dadb8d241564df7e32a5a137b8db
+size 612
